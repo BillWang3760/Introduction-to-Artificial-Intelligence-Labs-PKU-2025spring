@@ -10,7 +10,7 @@
 
 ## Lab1（part1)：逻辑和搜索
 
-任务量：~2days, moderate
+参考任务量：~2days, moderate
 
 q1/q2/q3要求实现三种不同的搜索算法，大致框架按照PPT中的伪代码和README文档中的例题不难实现。这里需要思考的问题是，应在何时检查state是否已在visited[]中？作者非常保守地采用了“一步一检查”的处理方式，这与例题标程略有出入，但若按照例题标程处理可能会在UCS/A*部分遇到错误。作者没有对两种检查方式做进一步比较分析，在此等待后来人释疑。
 
@@ -18,7 +18,7 @@ q4比较讨厌的一点是需要揣测出题人的意图，经过艰难的推测
 
 ## Lab1（part2)：逻辑和搜索
 
-任务量：~2days, moderate
+参考任务量：~2days, moderate
 
 q1/q2要求实现minimax搜索和alpha-beta剪枝，按照PPT中伪代码的思路来写即可。  
 
@@ -30,7 +30,7 @@ q1/q2要求实现minimax搜索和alpha-beta剪枝，按照PPT中伪代码的思�
 
 ## Lab2：机器学习  
 
-任务量：>5days, worst pain possible  
+参考任务量：>5days, worst pain possible  
 
 q1：有两个点比较特殊：1）这一问确实是需要一些设计来防止数值溢出的（具体设计参见代码），尽管这在后续问题中可能并不必要；2）作为Lab中第一个需要调参的题目，这一问的学习率大得堪称离谱，如果只对学习率在1e-2到1e-1之间进行调参，那么valid acc只能接近但很难达到0.98。  
 
@@ -41,3 +41,26 @@ q3：Lab2的魔鬼任务量初见端倪，需要补写的代码颇多，但都�
 q4：欢迎来到本课程Lab中任务量最大的题目。初看十分吓人，实际上也确实如此......  
 
 作者选择复现暴力五层MLP，并使用训练集trn和验证集val中的全部数据用于训练（时长9min左右，比较极限），最终可以在本地达到acc 0.98。与此同时，作者也对README中提及的卷积算子很感兴趣，并使用DeepSeek辅助设计了一个丐版LeNet5；但可惜的是，这个网络似乎很难训练，特别是在600s的时间限制下acc被卡死在0.88以下，并没有显示出对多层感知机的优势。鉴于这道题本身所占分值不过5分而已，不太建议读者在这道题上浪费过多时间，有兴趣探索卷积神经网络的读者可以参考Lab2:CNN中的文件与代码开展实验，其中提供了完整的nni调参框架。
+
+## Lab3：自然语言处理
+
+参考任务量：2~3days, severe
+
+q1：没有什么需要特别注意的。
+
+q2：关于长度对齐问题，作者采用了一种最简单粗暴的方法：不足补零，超出截断。q2的其他部分和Lab2 q3基本相同，但需要注意ResLinear等函数中存在维度匹配问题，直接照搬肯定是会出问题的。训练时间较长，可能会达到1h+，需要预留足够时间用于模型训练。
+
+q3：Hint: Files should be ranked according to the sum of tf-idf values for any word in the query that also appears in the file. Sentences should be ranked according to “matching word measure”: namely, the sum of IDF values for any word in the query that also appears in the sentence.  
+还需要注意对除数为零进行特殊处理。
+
+q4：娱乐题。  
+
+## Lab4：机器人与仿真  
+
+参考任务量：~3days, very severe  
+
+q1：这一问的碰撞检测如果按照严格的检测方法来做会造成较大的时间开销，作为折中方案，作者重新设计了is_valid_particle函数并引入了超参数COLLISION_DISTANCE，可供参考。如果不希望你的分数卡在10~20分动弹不得的话，强烈不建议在resample_particles使用所谓的轮盘赌算法；当然，即使读者聪明地采用了README提供的第一种方法，也仍然会遭遇acc对超参数极端敏感的问题，但这确实是正常现象。  
+
+q2：欢迎来到本课程Lab中任务量最小的题目。但还请注意正负号。  
+
+q3：这一问的代码量有一些大，且find_path、get_target两个关键函数的引导不足，需要费一番心思。作者采用的策略是单向RRT+末端优化，其中末端优化对于合格的性能而言是必要的，具体实现请参见代码。读者可以在GitHub网站上其它作者的Repository找到双向RRT的实现方法，但作者没有试验过其对Pacman运动效率和稳定性的影响，就不单独给出了。
