@@ -177,6 +177,7 @@ def uniformCostSearch(problem):
                     frontier.update((n_state, actions + [n_direction]), problem.getCostOfActions(actions + [n_direction]))
                 # 没有考虑过的，直接加入
                 # 已在frontier上的节点，若发现其具有更好的代价，更新
+
 def nullHeuristic(state, problem=None):
     """
     A heuristic function estimates the cost from the current state to the nearest
