@@ -1,0 +1,24 @@
+experimentName: MNIST_MLP_Tuning
+searchSpace:  
+  lr:
+    _type: loguniform
+    _value: [1e-3, 2e-3]
+  wd2:
+    _type: loguniform
+    _value: [1e-5, 1e-4]
+  batchsize:
+    _type: choice
+    _value: [256]
+trialCommand: python YourTraining.py
+trialCodeDirectory: .
+trialGpuNumber: 0
+trialConcurrency: 2
+maxExperimentDuration: 2h
+maxTrialNumber: 50
+tuner:
+  name: TPE
+  classArgs:
+    optimize_mode: maximize
+trainingService:
+  platform: local
+  useActiveGpu: False
